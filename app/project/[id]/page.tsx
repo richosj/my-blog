@@ -1,16 +1,41 @@
-// project/[id]/page.tsx
-"use client"; // 클라이언트 컴포넌트로 선언
+"use client";
 
 import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const ProjectDetail = () => {
-  const { id } = useParams(); // 동적 라우트의 파라미터 받아오기
+  const { id } = useParams();  // useParams를 사용하여 URL에서 'id' 파라미터 가져오기
+  const [project, setProject] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      const fetchProject = async () => {
+        try {
+          const response = await fetch(`http://localhost:5000/api/projects/${id}`);
+          if (response.ok) {
+            const data = await response.json();
+            setProject(data);
+          } else {
+            console.error('Failed to fetch project details');
+          }
+        } catch (err) {
+          console.error('Error:', err);
+        }
+      };
+
+      fetchProject();
+    }
+  }, [id]);
+
+  if (!project) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      <h1>Project Detail</h1>
-      <p>Project ID: {id}</p>
-      {/* 프로젝트 세부 정보 로직 추가 */}
+      <h1>{project.title}</h1>
+      <p>{project.description}</p>
+      <p>Created At: {new Date(project.created_at).toLocaleString()}</p>
     </div>
   );
 };

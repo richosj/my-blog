@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+/backend/node_modules
+/backend/uploads
+/backend/package-lock.json
 
 # testing
 /coverage
@@ -38,3 +41,4 @@ next-env.d.ts
 
 # VSCode
 .history
+.package-lock.json
