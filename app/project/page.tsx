@@ -2,7 +2,7 @@
 "use client"; // 이 줄 추가
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
+import "./list.scss";
 
 const ProjectList = () => {
 
@@ -28,23 +28,36 @@ const ProjectList = () => {
   }, []);
   
   return (
-    <div>
-      <h1>Project List</h1>
-      <div className="">
+    <>
+    
+      <header className='page-top'>
+        <h1>U.re View Work</h1>
+        <p><b>2024</b> / Current</p>
+      </header>
+
+      {/* <div className="">
         <Link href={`/project/write`}>등록</Link>
-      </div>
-      <div className="grid gap-4 grid-cols-4">
-        {projects.map((project) => (
-          <div className="wraps" key={project.id}>
-            <Link href={`/project/${project.id}`}>
-              <img src={`http://localhost:5000${project.image_url}`} alt={project.name} />
+      </div> */}
+
+      <div className="frames">
+        <div className="posts-work">
+          {projects.map((project) => (
+            <Link href={`/project/${project.id}`} key={project.id} className='work-view'>
+              <div className='desc'>
+                <div className='subject'>{project.title}</div>
+                <div className='summary'>{project.description}</div>
+                <div className='date'>{project.description}</div>
+              </div>
+              <div className='categorys'>
+                <span className="badge">React</span>
+                <span className="badge">Mysql</span>
+              </div>
+              <div className="thumbnail"><img src={`http://localhost:5000${project.image_url}`} alt={project.name} /></div>
             </Link>
-            <p>{project.title}</p>
-            <p>{project.description}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </>
     
   );
 };
