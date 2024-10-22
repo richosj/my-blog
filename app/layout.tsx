@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "./contains/Header";
 
 export const metadata: Metadata = {
-  title: "오하준 월드",
+  title: "테스트",
   description: "디스크립션",
 };
 
