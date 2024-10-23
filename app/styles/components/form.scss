@@ -1,0 +1,9 @@
+
+.form-control{
+    border-width: var(--input-border-size);
+    border-color: var(--input-border-color);
+    border-radius: var(--input-border-radius);
+    padding: var(--input-padding);
+    height: var(--input-height);
+    font-size: var(--font-size);
+}

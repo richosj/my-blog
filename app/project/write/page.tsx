@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 
+
 const ProjectWrite = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -72,17 +73,33 @@ const ProjectWrite = () => {
   };
 
   return (
-    <div>
-      <h1>Write a New Project</h1>
-      <form onSubmit={handleSubmit}>
+    <div className='container mx-auto px-10'>
+      <div className="page-title">프로젝트 등록</div>
+      <form onSubmit={handleSubmit} className='mx-auto w-2/4'>
         <input
           type="text"
-          placeholder="Project Title"
+          className='form-control block w-full mb-2'
+          placeholder="프로젝트 제목"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+        <input 
+        type="date"
+        placeholder="프로젝트 일"
+        className='form-control block w-full mb-2'
+        //onChange={(e) => setDate(e.target.value)} // date state를 update할 수 있도록 onChange event handler를 추가
+         />
+        <input type="text" 
+        placeholder='기술'
+        className='form-control block w-full mb-2'
+        />
+        <input type="text" 
+        placeholder='부가내용'
+        className='form-control block w-full mb-2'
+        />
         <textarea
-          placeholder="Project Description"
+          placeholder="상세 내용"
+          className='form-control block w-full mb-2'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
@@ -91,7 +108,9 @@ const ProjectWrite = () => {
           accept="image/*"
           onChange={handleImageChange}
         />
-        <button type="submit">Submit</button>
+        <button type="submit"
+        className="btn block w-full rounded-md text-white hover:bg-neutral-900 pt-4 pb-4 bg-neutral-700 mt-4 text-2xl"
+        >Submit</button>
       </form>
     </div>
   );

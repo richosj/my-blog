@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
   font-family: 'NEXON Lv2 Gothic';
   src: url('/fonts/NEXONLv2GothicMedium.woff2') format('woff2'),
@@ -47,6 +46,7 @@
   --input-border-color: #ccc;
   --input-border-radius: 5px;
   --input-padding: 0.5rem 1rem;
+  --input-height: 4rem;
   --post-radius: 10px;
   --post-border-color: #ccc;
   --transition-default: all 0.15s;

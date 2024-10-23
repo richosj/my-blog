@@ -1,11 +1,13 @@
 "use client";
-
-import { useParams } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+
 
 const ProjectDetail = () => {
   const { id } = useParams();  // useParams를 사용하여 URL에서 'id' 파라미터 가져오기
   const [project, setProject] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+
 
   useEffect(() => {
     if (id) {
@@ -17,9 +19,13 @@ const ProjectDetail = () => {
             setProject(data);
           } else {
             console.error('Failed to fetch project details');
+            notFound();
           }
         } catch (err) {
           console.error('Error:', err);
+          notFound();
+        } finally {
+          setIsLoading(false);
         }
       };
 
@@ -28,15 +34,16 @@ const ProjectDetail = () => {
   }, [id]);
 
   if (!project) {
-    return <div>Loading...</div>;
+    notFound()
   }
-
   return (
-    <div>
-      <h1>{project.title}</h1>
-      <p>{project.description}</p>
-      <p>Created At: {new Date(project.created_at).toLocaleString()}</p>
-    </div>
+    isLoading ? <Loadingbar /> : (
+      <div>
+        <h1>{project.title}</h1>
+        <p>{project.description}</p>
+        <p>Created At: {new Date(project.created_at).toLocaleString()}</p>
+      </div>
+    )
   );
 };
 
