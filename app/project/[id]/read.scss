@@ -1,0 +1,62 @@
+.read{
+    padding-top: 7.5vw;
+}
+.read-title{
+    font-size: 9.375vw;
+    font-weight: 500;
+}
+
+.read-detail{
+    display: flex
+}
+
+.d-if{
+    display: flex;
+    flex-direction: column;
+    gap: 4rem 0;
+    width: 15%;
+    dl{
+        line-height: 1.45;
+        dt{
+            font-size: 1.7rem;
+        }
+        dd{
+            font-weight: 500;
+            font-size: 2.5rem;
+        }
+    }
+}
+
+.t-ls{
+    width: 30%;
+    border-left: 1px solid #000;
+    padding-left: 2rem;
+    color: #000;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+.sd-c{
+    flex-basis: 1 1 auto;
+    width: 55%;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.back{
+    position: absolute;
+    left: 2rem;
+    top: 2rem;
+    font-size: 1.6rem;
+    font-weight: 400;
+    border-radius: .25rem;
+    border: 1px solid #000;
+    padding: 1.2rem 2.5rem;
+    background-color: #fff;
+    transition: all 0.15s ease;
+    &:hover,
+    &:focus{
+        background-color: #000;
+        color: #fff;
+    }
+}
