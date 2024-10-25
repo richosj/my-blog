@@ -1,12 +1,20 @@
 "use client"; // 이 줄 추가
 
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-
+import { createProject } from '../../api/projects'; // 프로젝트 생성 API 함수
+import { uploadImage } from '../../api/upload'; // 이미지 업로드 API 함수
 
 const ProjectWrite = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState<File | null>(null);
+  const [date, setDate] = useState(''); // 날짜 필드 추가
+  const [technologies, setTechnologies] = useState(''); // 기술 필드 추가
+  const [extraDetails, setExtraDetails] = useState(''); // 부가 내용 필드 추가
+  const [role, setRole] = useState(''); // 역할 필드 추가
+  const [link, setLink] = useState(''); // 링크 필드 추가
+  const router = useRouter(); // 프로젝트 저장 후 페이지 이동을 위한 useRouter
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -20,23 +28,9 @@ const ProjectWrite = () => {
     // 이미지 파일이 선택된 경우 업로드 처리
     let imageUrl = '';
     if (image) {
-      const formData = new FormData();
-      formData.append('image', image);
-
       try {
-        const uploadResponse = await fetch('http://localhost:5000/api/upload', {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (uploadResponse.ok) {
-          const uploadData = await uploadResponse.json();
-          imageUrl = uploadData.imageUrl; // 업로드된 이미지의 URL
-        } else {
-          console.error('Failed to upload image');
-          alert('이미지 업로드에 실패했습니다.');
-          return;
-        }
+        const uploadData = await uploadImage(image);
+        imageUrl = uploadData.imageUrl; // 업로드된 이미지의 URL
       } catch (err) {
         console.error('Error uploading image:', err);
         alert('서버와 이미지 업로드 연결하는 데 문제가 발생했습니다.');
@@ -46,26 +40,30 @@ const ProjectWrite = () => {
 
     // 프로젝트 생성 요청
     try {
-      const response = await fetch('http://localhost:5000/api/projects', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title, description, imageUrl }),
-      });
+      const projectData = {
+        title,
+        description,
+        imageUrl,
+        date,
+        technologies: technologies.split(','),
+        extraDetails,
+        role,
+        link,
+      };
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Project created:', data);
-        // 성공적으로 저장된 후 입력 필드 초기화
-        setTitle('');
-        setDescription('');
-        setImage(null);
-        alert('프로젝트가 성공적으로 저장되었습니다!');
-      } else {
-        console.error('Failed to create project');
-        alert('프로젝트 저장에 실패했습니다.');
-      }
+      const data = await createProject(projectData); // API 함수를 사용하여 프로젝트 생성
+      console.log('Project created:', data);
+      // 성공적으로 저장된 후 입력 필드 초기화
+      setTitle('');
+      setDescription('');
+      setImage(null);
+      setDate('');
+      setTechnologies('');
+      setExtraDetails('');
+      setRole('');
+      setLink('');
+      alert('프로젝트가 성공적으로 저장되었습니다!');
+      router.push('/project'); // 저장 후 목록 페이지로 이동
     } catch (err) {
       console.error('Error:', err);
       alert('서버와 연결하는 데 문제가 발생했습니다.');
@@ -82,26 +80,52 @@ const ProjectWrite = () => {
           placeholder="프로젝트 제목"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          required
         />
         <input 
-        type="date"
-        placeholder="프로젝트 일"
-        className='form-control block w-full mb-2'
-        //onChange={(e) => setDate(e.target.value)} // date state를 update할 수 있도록 onChange event handler를 추가
-         />
-        <input type="text" 
-        placeholder='기술'
-        className='form-control block w-full mb-2'
+          type="date"
+          placeholder="프로젝트 일"
+          className='form-control block w-full mb-2'
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          required
         />
-        <input type="text" 
-        placeholder='부가내용'
-        className='form-control block w-full mb-2'
+        <input 
+          type="text" 
+          placeholder='기술 (쉼표로 구분)'
+          className='form-control block w-full mb-2'
+          value={technologies}
+          onChange={(e) => setTechnologies(e.target.value)}
+          required
+        />
+        <input 
+          type="text" 
+          placeholder='부가내용'
+          className='form-control block w-full mb-2'
+          value={extraDetails}
+          onChange={(e) => setExtraDetails(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder='역할'
+          className='form-control block w-full mb-2'
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder='관련 링크'
+          className='form-control block w-full mb-2'
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
         />
         <textarea
           placeholder="상세 내용"
           className='form-control block w-full mb-2'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          required
         />
         <input
           type="file"
@@ -109,8 +133,9 @@ const ProjectWrite = () => {
           onChange={handleImageChange}
         />
         <button type="submit"
-        className="btn block w-full rounded-md text-white hover:bg-neutral-900 pt-4 pb-4 bg-neutral-700 mt-4 text-2xl"
-        >Submit</button>
+          className="btn block w-full rounded-md text-white hover:bg-neutral-900 pt-4 pb-4 bg-neutral-700 mt-4 text-2xl">
+          Submit
+        </button>
       </form>
     </div>
   );
