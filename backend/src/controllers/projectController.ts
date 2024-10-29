@@ -7,6 +7,7 @@ export const createProject = async (req: Request, res: Response) => {
     description,
     imageUrl,
     period,
+    exeDate,
     role,
     link,
     technologies,
@@ -15,8 +16,18 @@ export const createProject = async (req: Request, res: Response) => {
 
   try {
     const result = await pool.query(
-      "INSERT INTO projects (title, description, image_url, period, role, link, technologies, summary) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
-      [title, description, imageUrl, period, role, link, technologies, summary]
+      "INSERT INTO projects (title, description, image_url, period, role, link, technologies, summary, execution_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+      [
+        title,
+        description,
+        imageUrl,
+        period,
+        role,
+        link,
+        technologies,
+        summary,
+        exeDate,
+      ]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {

@@ -2,6 +2,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
+import authRoutes from "./routes/authRoutes";
 import projectRoutes from "./routes/projectRoutes"; // 프로젝트 라우트 임포트
 import uploadRoutes from "./routes/uploadRoutes"; // 업로드 라우트 임포트
 
@@ -22,6 +23,7 @@ app.use(express.json());
 // 라우트 등록
 app.use("/api/projects", projectRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/auth", authRoutes);
 
 // 서버 실행
 app.listen(port, () => {

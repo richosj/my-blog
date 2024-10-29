@@ -6,12 +6,13 @@ import { createProject } from '../../api/projects'; // 프로젝트 생성 API �
 import { uploadImage } from '../../api/upload'; // 이미지 업로드 API 함수
 
 const ProjectWrite = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
   const [image, setImage] = useState<File | null>(null);
-  const [date, setDate] = useState(''); // 날짜 필드 추가
+  const [period, setPeriod] = useState<string>(''); // 날짜 필드 추가
+  const [exeDate, setExeDate] = useState(''); // 날짜 필드 추가
   const [technologies, setTechnologies] = useState(''); // 기술 필드 추가
-  const [extraDetails, setExtraDetails] = useState(''); // 부가 내용 필드 추가
+  const [summary, setSummary] = useState(''); // 부가 내용 필드 추가
   const [role, setRole] = useState(''); // 역할 필드 추가
   const [link, setLink] = useState(''); // 링크 필드 추가
   const router = useRouter(); // 프로젝트 저장 후 페이지 이동을 위한 useRouter
@@ -44,9 +45,10 @@ const ProjectWrite = () => {
         title,
         description,
         imageUrl,
-        date,
+        period,
+        exeDate,
         technologies: technologies.split(','),
-        extraDetails,
+        summary,
         role,
         link,
       };
@@ -57,9 +59,10 @@ const ProjectWrite = () => {
       setTitle('');
       setDescription('');
       setImage(null);
-      setDate('');
+      setPeriod('');
+      setExeDate('');
       setTechnologies('');
-      setExtraDetails('');
+      setSummary('');
       setRole('');
       setLink('');
       alert('프로젝트가 성공적으로 저장되었습니다!');
@@ -86,8 +89,16 @@ const ProjectWrite = () => {
           type="date"
           placeholder="프로젝트 일"
           className='form-control block w-full mb-2'
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
+          value={exeDate}
+          onChange={(e) => setExeDate(e.target.value)}
+          required
+        />
+        <input 
+          type="text"
+          placeholder="제작 기간"
+          className='form-control block w-full mb-2'
+          value={period}
+          onChange={(e) => setPeriod(e.target.value)}
           required
         />
         <input 
@@ -102,8 +113,8 @@ const ProjectWrite = () => {
           type="text" 
           placeholder='부가내용'
           className='form-control block w-full mb-2'
-          value={extraDetails}
-          onChange={(e) => setExtraDetails(e.target.value)}
+          value={summary}
+          onChange={(e) => setSummary(e.target.value)}
         />
         <input
           type="text"
@@ -122,7 +133,7 @@ const ProjectWrite = () => {
         />
         <textarea
           placeholder="상세 내용"
-          className='form-control block w-full mb-2'
+          className='form-control block w-full h-10 mb-2'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required

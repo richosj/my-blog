@@ -14,9 +14,12 @@
     "@mui/icons-material": "^6.1.4",
     "@mui/material": "^6.1.4",
     "@reduxjs/toolkit": "^2.2.8",
+    "@types/jwt-decode": "^3.1.0",
     "aws-sdk": "^2.1691.0",
+    "axios": "^1.7.7",
     "clsx": "^2.1.1",
     "express": "^4.21.1",
+    "jwt-decode": "^4.0.0",
     "next": "14.2.14",
     "pg": "^8.13.0",
     "react": "^18",
@@ -26,6 +29,7 @@
     "sass": "^1.79.4"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.4",
     "@types/express": "^5.0.0",
     "@types/node": "^20.16.13",
     "@types/pg": "^8.11.10",

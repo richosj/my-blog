@@ -1,4 +1,5 @@
 // 프론트엔드에서 사용하는 API 함수 모음
+import axios from "axios";
 
 export const fetchProjects = async () => {
   try {
@@ -32,19 +33,16 @@ export const fetchProjectById = async (id: string) => {
 
 export const createProject = async (projectData: any) => {
   try {
-    const response = await fetch("http://localhost:5000/api/projects", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(projectData),
-    });
-    if (!response.ok) {
-      throw new Error(
-        `Failed to create project, status code: ${response.status}`
-      );
-    }
-    return await response.json();
+    const response = await axios.post(
+      "http://localhost:5000/api/projects",
+      projectData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
   } catch (err) {
     console.error("Error creating project:", err);
     throw err;

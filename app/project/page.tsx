@@ -25,6 +25,7 @@ const ProjectList = () => {
       try {
         const data = await fetchProjects(); // API 함수 호출
         setProjects(data);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
         console.error("Failed to fetch projects");
       } finally {
