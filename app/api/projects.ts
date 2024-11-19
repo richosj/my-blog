@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const fetchProjects = async () => {
   try {
-    const response = await fetch("http://localhost:5000/api/projects");
+    const response = await fetch(`${process.env.API_BASE_URL}/api/projects`);
     if (!response.ok) {
       throw new Error(
         `Failed to fetch projects, status code: ${response.status}`
@@ -18,7 +18,7 @@ export const fetchProjects = async () => {
 
 export const fetchProjectById = async (id: string) => {
   try {
-    const response = await fetch(`http://localhost:5000/api/projects/${id}`);
+    const response = await fetch(`${process.env.API_BASE_URL}/api/projects/${id}`);
     if (!response.ok) {
       throw new Error(
         `Failed to fetch project details, status code: ${response.status}`
@@ -34,7 +34,7 @@ export const fetchProjectById = async (id: string) => {
 export const createProject = async (projectData: any) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/projects",
+      `${process.env.API_BASE_URL}/api/projects`,
       projectData,
       {
         headers: {

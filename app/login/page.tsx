@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
     setError(null);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const response = await axios.post(`${process.env.API_BASE_URL}/api/auth/login`, { email, password });
       // 로그인 성공 시 토큰 저장 및 메인 페이지로 이동
       localStorage.setItem('token', response.data.token);
       router.replace('/');

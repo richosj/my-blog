@@ -27,7 +27,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="post-category flex flex-wrap items-center gap-4">
-                  <span className='rounded bg-neutral-500 hover:bg-neutral-900 p-2 text-lg text-white transition-all	'>#Typescript</span>
+                  <span className='rounded bg-neutral-500 hover:bg-neutral-900 p-2 text-lg text-white transition-all'>#Typescript</span>
                 </div>
               </div>
             </Link>

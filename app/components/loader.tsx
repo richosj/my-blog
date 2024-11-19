@@ -13,5 +13,4 @@ const Loader: FC = () => {
         </div>
     )
 }
-
 export default Loader;

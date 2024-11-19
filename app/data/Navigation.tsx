@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FC } from 'react';
-import "./navition.scss";
+import "./navigation.scss";
 
 const Navigation: FC = () => {
     return (

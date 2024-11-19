@@ -31,8 +31,7 @@ const RegisterPage: React.FC = () => {
     setSuccess(null);
 
     try {
-      //const response = await axios.post('/api/auth/register', formData);
-      const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+      const response = await axios.post(`${process.env.API_BASE_URL}/api/auth/register`, formData);
       setSuccess(response.data.message);
       setTimeout(() => {
         router.replace('/');
