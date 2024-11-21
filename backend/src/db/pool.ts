@@ -11,4 +11,8 @@ const pool = new Pool({
   port: Number(process.env.PG_PORT),
 });
 
+pool.on("connect", (client) => {
+  client.query(`SET search_path TO ${process.env.PG_SCHEMA}`);
+});
+
 export default pool;
